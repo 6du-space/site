@@ -1,0 +1,74 @@
+.cursor
+  position fixed
+  left 0
+  top 0
+  pointer-events none
+
+$cursorW = 5px
+
+.cursor-6du
+  z-index 1000001
+
+  &:after
+    width 4px
+    height 4px
+    left -2px
+    top -2px
+    background #000
+    border-radius 50%
+    transition all 1s
+
+  &:before
+    transition all 1s
+    background rgba(255, 255, 255, 0.5)
+    border-radius 50%
+    top -1 * $cursorW
+    left -1 * $cursorW
+    width 2 * $cursorW
+    height 2 * $cursorW
+    mix-blend-mode screen
+
+  &:after, &:before
+    content ''
+    position absolute
+
+  &.A, &.BUTTON
+    &:after
+      width $cursorW
+      height $cursorW
+      top -0.5 * $cursorW
+      left -0.5 * $cursorW
+      opacity 0
+
+    &:before
+      top -1 * $cursorW * 2
+      left -1 * $cursorW * 2
+      width 2 * $cursorW * 2
+      height 2 * $cursorW * 2
+      background rgba(0, 0, 255, 0.2)
+
+  &.BUTTON:before
+    background rgba(86, 254, 0, 0.5)
+
+  &.I
+    &:after
+      top -1 * $cursorW
+      left -1 * $cursorW
+      width 2 * $cursorW
+      height 2 * $cursorW
+      background RGBA(252, 86, 31, 0.2)
+
+    &:before
+      opacity 0
+
+  &.H
+    &:after, &:before
+      opacity 0
+
+.cursor--canvas
+  width 100vw
+  height 100vh
+  z-index 1000002
+
+body, body a, body button
+  cursor none

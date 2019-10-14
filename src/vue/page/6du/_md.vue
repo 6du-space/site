@@ -1,0 +1,65 @@
+<style lang=stylus scoped>
+main
+  text-align justify
+  margin auto
+  max-width 41em
+  padding 0 2em 20vh
+  /deep/
+    article
+      a
+        position relative
+        color #073
+        transition all 0.3s
+        &:after
+          content ''
+          border-top 1px dashed #073
+          position absolute
+          bottom -0.35em
+          left 0
+          transform scale(2, 0.5)
+          transform-origin 0 0
+          width 50%
+          transition all 0.3s
+        &:hover
+          color #f50
+          font-weight bold
+          &:after
+            border-style solid
+            border-color #f50
+      a.mdback, .mdref a
+        user-select none
+        font-size 0.7em
+        color #999
+        &:hover
+          color #f50
+        &:after
+          content none
+</style>
+<template lang=pug>
+main(ref="m")
+</template>
+
+<script lang=ls>
+import
+  \@/ls/html/md-load
+  \@/ls/html/md
+  \@/ls/html/pug
+  \@/ls/vue/route
+
+export default _ = pug(
+  \md
+  * methods:
+      x:!~>
+        route.back!
+    data:~>
+      {
+        h1:''
+        html:''
+      }
+  (txt, elem)!->
+    [h1, brief, meta, body] = await md-load txt
+    $title h1
+    @h1 = h1
+    @html = md body
+)
+</script>

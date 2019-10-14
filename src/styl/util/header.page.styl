@@ -1,0 +1,26 @@
+header.page
+  border-bottom 1px dashed #ccc
+  display flex
+  justify-content space-between
+  margin-bottom 1.8rem
+
+  aside
+    display flex
+    margin-left 1.2em
+    align-items center
+
+    x-ico
+      margin-left 0.6em
+      $width = 1.5rem
+      width $width
+      height @width
+      line-height @width
+      border-radius (@width / 2)
+
+      a
+        width $width
+        height @width
+        font-size @width
+
+        &:hover
+          color #f50 !important

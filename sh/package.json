@@ -1,0 +1,8 @@
+{
+  "name": "6d",
+  "version": "1.0.61",
+  "main": "index.js",
+  "license": "MPL",
+  "repository": "github:6du-space/site",
+  "files": "."
+}

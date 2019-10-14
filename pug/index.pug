@@ -1,0 +1,95 @@
+style.
+  main.pug{
+    list-style:none;
+    margin:auto;
+    max-width:41em;
+    padding:0 2em 20vh;
+  }
+  main.pug>h2.date{
+    padding-top:3.5rem;
+    text-shadow: 1px 1px 0 #aaa;
+    margin:0;
+  }
+  main.pug>h2.date:first-child{
+    padding-top:1.5rem;
+  }
+  main.pug>li{
+    margin-top:1.5rem;
+  }
+  main.pug>li>section{
+    margin-top:1rem;
+  }
+  main.pug>li>a.h2{
+    font-family:html;
+    font-size:1.3rem;
+    line-height:1.35;
+    text-shadow: 1px 1px 0 #eee;
+    font-weight:bold;
+    color:#000;
+    position:relative;
+    padding-bottom:.6rem;
+  }
+
+  main.pug>li>a.h2:after,main.pug>li>a.h2:before{
+    border-top:1px solid #f50;
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:0;
+  }
+  main.pug>li>a.h2:before{
+    width:200%;
+    border-image:linear-gradient(90deg, #333,#eee 20%, transparent);
+    border-image-slice: 10;
+    transform:scale(0.5);
+    transform-origin:0 0;
+  }
+  main.pug>li>a.h2:after{
+    width:0;
+    transition: all .5s;
+  }
+  main.pug>li>a.h2:hover{
+    color:#f50;
+    text-shadow:none;
+  }
+  main.pug>li>a.h2:hover:after{
+    width:100%;
+  }
+
+main.pug
+  h2.date 2019 - 07
+  li
+    a.h2 国务院国资委主任郝鹏会见马化腾：支持央企与腾讯等互联网企业加强合作
+    section
+      p 7月31日，国务院国资委主任郝鹏在国资委会见了腾讯公司董事会主席兼首席执行官马化腾。郝鹏强调，国资委鼓励支持中央企业与腾讯公司等互联网企业加强务实合作，将人工智能、大数据等与实体经济深度融合，推动传统产业转型升级、大力发展战略性新兴产业，培育壮大经济发展新动能。
+  li
+    a.h2 交通运输部：29省份均已开建ETC门架，全国ETC用户超过9780万
+    section
+      p 截至7月29日，29个省份均已开工建设改造ETC门架系统，全国ETC用户累计达到9780.43万，完成发行总任务的51.25%，据剩余发行任务计算，2019年剩余的155天平均每天需发行60.03万。
+  li
+    a.h2 OPPO与T-Mobile合作完成荷兰首次5G现网测试
+    section
+      p 近日，OPPO与T-Mobile荷兰合作，在其位于海牙总部的5G外场实验室中，利用OPPO Reno 5G版完成了荷兰市场的首次5G测试，并实现了850Mbps的峰值下载速率。OPPO还表示，将通过与T-Mobile荷兰的持续合作，帮助推动5G网络于2020年在荷兰实现全面商用。
+      p.img
+        i
+          img(src="/pug/jt.webp")
+  li
+    a.h2 阿里速卖通开通15天无理由Free Return服务
+    section
+      p 阿里巴巴速卖通推出15天无理由Free Return服务，并预计在8月15日将Local Return全面升级为Free Return。此外，商家在接入此项服务后，不仅可以获得买家包括搜索、推荐、频道、产品详情等10多个平台和新购买场景365天*24小时的全链路透标，还将获得Free Return搜索筛选框。
+  li
+    a.h2 美联储降息“绵里藏针” 特朗普“计谋得逞”却狂怒
+  h2.date 2019 - 06
+  li
+    a.h2 大变局下的权力再平衡 中西发展模式谁更脆弱
+  li
+    a.h2 字越少，事越大：北京暂停居民赴台自由行
+  li
+    a.h2 上海磋商 中美展示贸易谈判盘外招
+  li
+    a.h2 台湾自由行叫停 大陆直指民进党挟洋自重
+  li
+    a.h2 解放军新晋上将6人打破惯例 1人曾遭美制裁
+  li
+    a.h2 即将上线主网的Telegram区块链和Libra，谁的野心更大？
+
