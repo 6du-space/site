@@ -58,6 +58,37 @@ import
   \@/ls/html/md
   \@/ls/html/pug
 
+#bufferInt64 = (buf) ~>
+#  ab = new ArrayBuffer buf.length+2
+#  view = new Uint8Array ab
+#  i = 0
+#  view[0] = buf[0]
+#  view[1] = buf[0]
+#  i = 0
+#  while i < buf.length
+#    view[2+i] = buf[i]
+#    ++i
+#  view = new DataView(ab)
+#  return view.getBigInt64()
+
+_split = (txt)~>
+  console.log typeof(txt)
+  li = []
+  offset = 0
+  txt-len = txt.length-1
+  while offset < txt-len
+    pos = begin = offset + 38
+    time = txt.slice(0+offset,6+offset)
+    hash = txt.slice(6+offset,begin)
+    console.log pos
+    while txt[pos] != '\n'
+      ++pos
+    console.log begin, pos
+    console.log txt.slice(begin,pos)
+    offset := pos
+  console.log li
+  li
+
 export default _ = pug(
   \li
   * data:~>
@@ -67,9 +98,8 @@ export default _ = pug(
   (txt, elem)!->
     $title elem(\h1).innerText
     pre_month = ''
-    for i,pos in txt.split '\n'
+    for i,pos in _split txt
       [time,hash,path] = i.split(' ')
-      time = parseInt(time,36)
       if time > 0
         m = new Date(time*1000).toISOString().slice(0,7)
         if m != pre_month
@@ -82,7 +112,13 @@ export default _ = pug(
         meta.链接标题 or h1
         md brief
       ]
-  \js
+  (url)~>
+    $get(
+      url+\.js
+      {
+        responseType:\arraybuffer
+      }
+    )
 )
 
 </script>

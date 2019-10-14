@@ -1,4 +1,4 @@
-export default _ = (url,suffix)~>
+export default _ = (url)~>
   $get(
-    url+'.'+(suffix or url.slice(0,url.indexOf("/")))
+    url+'.'+url.slice(0,url.indexOf("/"))
   )

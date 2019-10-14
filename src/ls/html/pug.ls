@@ -2,7 +2,9 @@ import
   \@/ls/html
   \vue : Vue
 
-export default _ = (url, option, callback, suffix)~>
+export default _ = (url, option, callback, get)~>
+  _get = get or (uri)~>
+    $f uri
   html {
     beforeRoute:(to, from, next)!~>
       next !->
@@ -18,7 +20,7 @@ export default _ = (url, option, callback, suffix)~>
         )
         callback.call(
           new component().$mount(template)
-          await $f url+"/"+to.params.f, suffix
+          await _get url+"/"+to.params.f
           elem
         )
   },\/ + url
