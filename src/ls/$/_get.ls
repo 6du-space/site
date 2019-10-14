@@ -4,6 +4,9 @@ import
   \lodash : {escape}
 
 export default _ = (input, init, type="text")!~>
+  if typeof(init) == \string
+    type = init
+    init = {}
   Spin.inc!
 
   url = input

@@ -71,21 +71,37 @@ import
 #  view = new DataView(ab)
 #  return view.getBigInt64()
 
+getBigInt48 = (txt, offset)~>
+  ab8 = new ArrayBuffer(8)
+  time8 = new Uint8Array(ab8)
+  time = new Uint8Array(txt,0+offset,6)
+
+  if 128 .&. time[0]
+    n = 255
+  else
+    n = 0
+  time8[0] = time8[1] = n
+  time8.set(time,2)
+  av = new DataView(ab8)
+  parseInt av.getBigInt64()
+
 _split = (txt)~>
-  console.log typeof(txt)
   li = []
   offset = 0
-  txt-len = txt.length-1
+  txt-len = txt.byteLength
+  uint = new Uint8Array(txt)
   while offset < txt-len
     pos = begin = offset + 38
-    time = txt.slice(0+offset,6+offset)
-    hash = txt.slice(6+offset,begin)
-    console.log pos
-    while txt[pos] != '\n'
+    while uint[pos] != 10 # \n 的 ascii 码 是 10
       ++pos
-    console.log begin, pos
-    console.log txt.slice(begin,pos)
-    offset := pos
+    time = getBigInt48(txt, offset)
+    hash = txt.slice(6+offset,begin)
+    li.push [
+      time
+      hash
+      new TextDecoder("utf-8").decode uint.slice(begin,pos)
+    ]
+    offset := pos+1
   console.log li
   li
 
@@ -98,15 +114,14 @@ export default _ = pug(
   (txt, elem)!->
     $title elem(\h1).innerText
     pre_month = ''
-    for i,pos in _split txt
-      [time,hash,path] = i.split(' ')
+    for [time,hash,path],pos in _split txt
       if time > 0
         m = new Date(time*1000).toISOString().slice(0,7)
         if m != pre_month
           pre_month = m
           @li.push m
 
-      [h1, brief, meta] = await md-load await $f "md/#path"
+      [h1, brief, meta] = await md-load await $f path
       @li.push [
         path
         meta.链接标题 or h1
@@ -115,9 +130,7 @@ export default _ = pug(
   (url)~>
     $get(
       url+\.js
-      {
-        responseType:\arraybuffer
-      }
+      \arrayBuffer
     )
 )
 
