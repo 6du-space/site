@@ -75,15 +75,13 @@ getBigInt48 = (txt, offset)~>
   ab8 = new ArrayBuffer(8)
   time8 = new Uint8Array(ab8)
   time = new Uint8Array(txt,0+offset,6)
-
   if 128 .&. time[0]
     n = 255
   else
     n = 0
   time8[0] = time8[1] = n
   time8.set(time,2)
-  av = new DataView(ab8)
-  parseInt av.getBigInt64()
+  parseInt (new DataView(ab8)).getBigInt64()
 
 _split = (txt)~>
   li = []
