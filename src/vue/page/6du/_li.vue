@@ -60,7 +60,7 @@ import
   \@/ls/html/md-load
   \@/ls/html/md
   \@/ls/html/pug
-  \@/ls/indexdb
+  \idb : {openDB}
 
 #bufferInt64 = (buf) ~>
 #  ab = new ArrayBuffer buf.length+2
@@ -125,13 +125,12 @@ export default _ = pug(
         li:[]
       }
   (li, elem)!->
-    db = await indexdb(
+    db = await openDB(
       \hash
-      1
-      (db)!~>
-        db.createObjectStore(\hash, { keyPath: \id })
+      2
+      * upgrade: (db)!~>
+          db.createObjectStore(\hash, { keyPath: \id })
     )
-    console.log db
     $title elem(\h1).innerText
     pre_month = ''
     for [time,hash,path],pos in _split li
@@ -142,11 +141,21 @@ export default _ = pug(
           pre_month = m
           @li.push m
 
-      bin =  await $f path, \arrayBuffer
-      digest = await crypto.subtle.digest(\SHA-256, bin)
-      console.log path, equal(hash, digest)
+      txt = await db.get(
+        \hash
+        hash
+      )
+      if txt
+        txt = txt.v
+      else
+        txt  = await $f path
+        await db.put(
+          \hash
+          * id:hash
+            v:txt
+        )
 
-      [h1, brief, meta] = await md-load new TextDecoder(\utf-8).decode bin
+      [h1, brief, meta] = await md-load txt
       @li.push [
         path
         meta.链接标题 or h1
