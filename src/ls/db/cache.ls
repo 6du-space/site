@@ -41,12 +41,13 @@ export
     [h1, brief, meta] = md-load txt
     h1 = meta.链接标题 or h1
     brief = md brief
+    li = [hash, h1, brief]
     await put {
       url : [url, hash]
       hash : [hash, txt]
-      li : [hash, h1, brief]
+      li
     }
-    return [ h1 , brief ]
+    return li
 
   by-url = opened (url)->
 
