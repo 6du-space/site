@@ -60,6 +60,7 @@ import
   \@/ls/html/md-load
   \@/ls/html/md
   \@/ls/html/pug
+  \@/ls/db
 
 #bufferInt64 = (buf) ~>
 #  ab = new ArrayBuffer buf.length+2
