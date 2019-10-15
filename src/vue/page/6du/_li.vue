@@ -125,6 +125,13 @@ export default _ = pug(
         li:[]
       }
   (li, elem)!->
+    db = await db(
+      \hash
+      1
+      (db)!~>
+        db.createObjectStore(\hash, { keyPath: \id })
+    )
+    console.log db
     $title elem(\h1).innerText
     pre_month = ''
     for [time,hash,path],pos in _split li
