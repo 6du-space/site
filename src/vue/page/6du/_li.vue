@@ -122,8 +122,7 @@ export default _ = pug(
       {
         li:[]
       }
-  (li, elem)!->
-    $title elem(\h1).innerText
+  (li)!->
     pre_month = ''
     todo = []
     for [time,hash,url],pos in _split li
@@ -134,7 +133,7 @@ export default _ = pug(
           pre_month = m
           @li.push m
 
-      todo.push await li-get url, hash
+      todo.push li-get url, hash
     @li.splice(
       @li.length, todo.length, ... await Promise.all todo
     )

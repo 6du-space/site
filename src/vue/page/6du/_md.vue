@@ -88,9 +88,8 @@ export default _ = pug(
         keydown
         esc
       )
-  (txt, elem)!->
+  (txt)!->
     [h1, brief, meta, body] = await md-load txt
-    $title h1
     @h1 = h1
     @html = md body
 )

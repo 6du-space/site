@@ -15,17 +15,17 @@ export default _ = (url, option, callback, get)~>
         ref = $(@$refs.m)
         elem = (tag)~>
           ref.find(tag)._[0]
-
         template = elem \template
         option.template = "<main>#{template.innerHTML}</main>"
         component = Vue.component(
           'pug-'
           option
         )
-        com := new component().$mount(template)
-        callback.call(
+        com := new component()
+        await callback.call(
           com
           await _get url+"/"+to.params.f
-          elem
         )
+        com.$mount(template)
+        $title elem(\h1).innerText
   },\/ + url
