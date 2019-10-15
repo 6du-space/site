@@ -12,5 +12,5 @@ export default _ = (name, version, init)~>
       conn.onupgradeneeded = (event) !~>
         init(event.target.result)
 
-      request.onerror = reject
+      conn.onerror = reject
   )

@@ -60,7 +60,7 @@ import
   \@/ls/html/md-load
   \@/ls/html/md
   \@/ls/html/pug
-  \@/ls/db
+  \@/ls/indexdb
 
 #bufferInt64 = (buf) ~>
 #  ab = new ArrayBuffer buf.length+2
@@ -125,7 +125,7 @@ export default _ = pug(
         li:[]
       }
   (li, elem)!->
-    db = await db(
+    db = await indexdb(
       \hash
       1
       (db)!~>
