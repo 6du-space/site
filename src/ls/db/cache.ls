@@ -29,28 +29,26 @@ opened = (obj)~>
       obj[k] = opened(v)
   obj
 
-export default _ = opened {
-  set :
-    url-hash : (url, hash, txt)->
-      tx = @transaction(
-        <[
-          url
-          hash
-        ]>
-        \readwrite
-      )
-      tx.objectStore(\url).put {
-        k:url
-        v:hash
-      }
-      tx.objectStore(\hash).put {
-        k:hash
-        v:txt
-      }
-      await tx.done
-  get:
-    url : (url)->
+export
+  save : (url, hash, txt)->
+    tx = @transaction(
+      <[
+        url
+        hash
+      ]>
+      \readwrite
+    )
+    tx.objectStore(\url).put {
+      k:url
+      v:hash
+    }
+    tx.objectStore(\hash).put {
+      k:hash
+      v:txt
+    }
+    await tx.done
 
-    hash : (hash)->
+  by-url : (url)->
+
+  by-hash : (hash)->
       await @get(\hash, hash)
-}

@@ -60,7 +60,7 @@ import
   \@/ls/html/md-load
   \@/ls/html/md
   \@/ls/html/pug
-  \@/ls/db/Cache
+  \@/ls/db/Cache : {save, by-hash}
 
 #bufferInt64 = (buf) ~>
 #  ab = new ArrayBuffer buf.length+2
@@ -135,12 +135,12 @@ export default _ = pug(
           pre_month = m
           @li.push m
 
-      txt = await Cache.get.hash hash
+      txt = await by-hash hash
       if txt
         txt = txt.v
       else
         txt  = await $f url
-        await Cache.set.url-hash url, hash, txt
+        await save url, hash, txt
 
       [h1, brief, meta] = await md-load txt
       @li.push [
