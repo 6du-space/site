@@ -60,7 +60,7 @@ import
   \@/ls/html/md-load
   \@/ls/html/md
   \@/ls/html/pug
-  \idb : {openDB}
+  \@/ls/db/Cache
 
 #bufferInt64 = (buf) ~>
 #  ab = new ArrayBuffer buf.length+2
@@ -125,13 +125,7 @@ export default _ = pug(
         li:[]
       }
   (li, elem)!->
-    db = await openDB(
-      \cache
-      1
-      * upgrade: (db)!~>
-          db.createObjectStore(\hash, { keyPath: \k })
-          db.createObjectStore(\url, { keyPath: \k })
-    )
+    db = await Cache()
     $title elem(\h1).innerText
     pre_month = ''
     for [time,hash,path],pos in _split li
