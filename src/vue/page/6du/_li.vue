@@ -124,8 +124,8 @@ export default _ = pug(
 
       txt =  await $f path
       [h1, brief, meta] = await md-load txt
-      digest = await crypto.subtle.digest(\SHA-256, txt)
-      console.log digest
+#      digest = await crypto.subtle.digest(\SHA-256, txt)
+#      console.log digest
       @li.push [
         path
         meta.链接标题 or h1
