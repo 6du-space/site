@@ -125,10 +125,9 @@ export default _ = pug(
         li:[]
       }
   (li, elem)!->
-    db = await Cache()
     $title elem(\h1).innerText
     pre_month = ''
-    for [time,hash,path],pos in _split li
+    for [time,hash,url],pos in _split li
 
       if time > 0
         m = new Date(time*1000).toISOString().slice(0,7)
@@ -136,34 +135,16 @@ export default _ = pug(
           pre_month = m
           @li.push m
 
-      txt = await db.get(
-        \hash
-        hash
-      )
+      txt = await Cache.get.hash hash
       if txt
         txt = txt.v
       else
-        txt  = await $f path
-        tx = db.transaction(
-          <[
-            url
-            hash
-          ]>
-          \readwrite
-        )
-        tx.objectStore(\url).put {
-          k:path
-          v:hash
-        }
-        tx.objectStore(\hash).put {
-          k:hash
-          v:txt
-        }
-        await tx.done
+        txt  = await $f url
+        await Cache.set.url-hash url, hash, txt
 
       [h1, brief, meta] = await md-load txt
       @li.push [
-        path
+        url
         meta.链接标题 or h1
         md brief
       ]
