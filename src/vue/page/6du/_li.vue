@@ -111,10 +111,10 @@ export default _ = pug(
       {
         li:[]
       }
-  (txt, elem)!->
+  (li, elem)!->
     $title elem(\h1).innerText
     pre_month = ''
-    for [time,hash,path],pos in _split txt
+    for [time,hash,path],pos in _split li
       console.log hash, path
       if time > 0
         m = new Date(time*1000).toISOString().slice(0,7)
@@ -122,7 +122,10 @@ export default _ = pug(
           pre_month = m
           @li.push m
 
-      [h1, brief, meta] = await md-load await $f path
+      txt =  await $f path
+      [h1, brief, meta] = await md-load txt
+      digest = await crypto.subtle.digest(\SHA-256, txt)
+      console.log digest
       @li.push [
         path
         meta.链接标题 or h1
