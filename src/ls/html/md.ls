@@ -1,5 +1,6 @@
 import
   \markdown-it : markdown
+  \markdown-it-imsize : markdown-it-imsize
   \markdown-it-footnote-6du : footnote
   \markdown-it-block-image : blockImagePlugin
   \markdown-it-toc-and-anchor : markdownItTocAndAnchor
@@ -17,6 +18,8 @@ md = markdown({
     anchorClassName: \mdH
     anchorLinkSymbol: \»
     anchorLinkPrefix: \-
+).use(
+  markdown-it-imsize
 )
 
 var _PATH

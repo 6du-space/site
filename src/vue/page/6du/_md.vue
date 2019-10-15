@@ -43,6 +43,8 @@ main
           color #f50
         &:after
           content none
+      ol
+        margin-left 1.12em
       ul.mdToc
         list-style none
         margin-left -0.96em

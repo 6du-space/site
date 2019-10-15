@@ -7288,6 +7288,11 @@ markdown-it-footnote-6du@^3.0.2:
   resolved "https://registry.npmjs.org/markdown-it-footnote-6du/-/markdown-it-footnote-6du-3.0.2.tgz#a7e3562d13dd0a708641d1882763c3b34de06bbc"
   integrity sha512-npWsgQlhikLS2tvCgmCxiwHPTTnRLE55+0eAPBEzPxIjjcTCfTLxA9aAIBOVyiWZ6K0zJYIQ7/TRu3VVwDdg4w==
 
+markdown-it-imsize@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npm.taobao.org/markdown-it-imsize/download/markdown-it-imsize-2.0.1.tgz#cca0427905d05338a247cb9ca9d968c5cddd5170"
+  integrity sha1-zKBCeQXQUziiR8ucqdloxc3dUXA=
+
 markdown-it-toc-and-anchor@^4.2.0:
   version "4.2.0"
   resolved "https://registry.npm.taobao.org/markdown-it-toc-and-anchor/download/markdown-it-toc-and-anchor-4.2.0.tgz#d1613327cc63c61f82cd66cbac5564f4db12c0e9"
