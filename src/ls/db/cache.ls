@@ -57,6 +57,7 @@ export
     if r
       v = r.v
     else
+      #TODO 检测缓存，删除过期
       v = await save url, hash, await $f url
     v.push url
     return v
