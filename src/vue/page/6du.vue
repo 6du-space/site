@@ -370,6 +370,7 @@ a.menu
     menu(v-if="rbar.length" :style="'width:'+(1.5*(1+rbar.length))+'rem'")
       a.I(v-for="i in rbar" :class="'I-'+i")
     ohyeah.main(
+      :useKeybord="true"
       :noHor="true" height="" width=""
       thumbColor="rgba(0,0,0,.2)"
       @onVerStart="scroll" @onScroll="scroll" ref="main"
