@@ -13,8 +13,9 @@ md = markdown({
 ).use(
   markdownItTocAndAnchor
   * tocClassName : \mdToc
+    anchorLinkSpace: false
     anchorClassName: \mdH
-    anchorLinkSymbol: \§
+    anchorLinkSymbol: \»
     anchorLinkPrefix: \-
 )
 

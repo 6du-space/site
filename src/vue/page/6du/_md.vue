@@ -29,6 +29,8 @@ main
             border-color #f50
         &.mdH
           color #ccc
+          vertical-align 0.1em
+          margin-right 0.31em
           &:after
             content none
           &:hover
@@ -44,6 +46,7 @@ main
       ul.mdToc
         list-style none
         margin-left -0.96em
+        margin-bottom 1.8em
         color #555
         a
           color #555
