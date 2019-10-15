@@ -105,6 +105,18 @@ _split = (txt)~>
     offset := pos+1
   li
 
+equal = (buf1, buf2) ~>
+  return false if buf1.byteLength != buf2.byteLength
+  dv1 = new BigInt64Array buf1
+  dv2 = new BigInt64Array buf2
+  len = dv1.length
+  i = 0
+  while i < len
+    if dv1[i] != dv2[i]
+      return false
+    ++i
+  true
+
 export default _ = pug(
   \li
   * data:~>
@@ -115,18 +127,18 @@ export default _ = pug(
     $title elem(\h1).innerText
     pre_month = ''
     for [time,hash,path],pos in _split li
-      console.log hash, path
+
       if time > 0
         m = new Date(time*1000).toISOString().slice(0,7)
         if m != pre_month
           pre_month = m
           @li.push m
 
-      bin =  await $get path+"."+path.slice(0,path.indexOf("/")-1), \arrayBuffer
-      console.log txt
-      [h1, brief, meta] = await md-load txt
-#      digest = await crypto.subtle.digest(\SHA-256, txt)
-#      console.log digest
+      bin =  await $f path, \arrayBuffer
+      digest = await crypto.subtle.digest(\SHA-256, bin)
+      console.log path, equal(hash, digest)
+
+      [h1, brief, meta] = await md-load new TextDecoder(\utf-8).decode bin
       @li.push [
         path
         meta.链接标题 or h1
