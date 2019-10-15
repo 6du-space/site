@@ -31,6 +31,8 @@ main
           color #ccc
           &:after
             content none
+          &:hover
+            color #f50
       a.mdback, .mdref a
         user-select none
         font-size 0.7em
