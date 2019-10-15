@@ -126,10 +126,11 @@ export default _ = pug(
       }
   (li, elem)!->
     db = await openDB(
-      \hash
-      2
+      \cache
+      1
       * upgrade: (db)!~>
-          db.createObjectStore(\hash, { keyPath: \id })
+          db.createObjectStore(\hash, { keyPath: \k })
+          db.createObjectStore(\url, { keyPath: \k })
     )
     $title elem(\h1).innerText
     pre_month = ''
@@ -149,11 +150,22 @@ export default _ = pug(
         txt = txt.v
       else
         txt  = await $f path
-        await db.put(
-          \hash
-          * id:hash
-            v:txt
+        tx = db.transaction(
+          <[
+            url
+            hash
+          ]>
+          \readwrite
         )
+        tx.objectStore(\url).put {
+          k:path
+          v:hash
+        }
+        tx.objectStore(\hash).put {
+          k:hash
+          v:txt
+        }
+        await tx.done
 
       [h1, brief, meta] = await md-load txt
       @li.push [
