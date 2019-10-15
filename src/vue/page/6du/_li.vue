@@ -116,6 +116,7 @@ export default _ = pug(
     $title elem(\h1).innerText
     pre_month = ''
     for [time,hash,path],pos in _split txt
+      console.log hash, path
       if time > 0
         m = new Date(time*1000).toISOString().slice(0,7)
         if m != pre_month
