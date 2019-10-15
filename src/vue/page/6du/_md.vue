@@ -6,13 +6,14 @@ main
   padding 0 2em 20vh
   /deep/
     article
+      $a-color = darken(#9ACA27, 15)
       a
         position relative
-        color #073
+        color $a-color
         transition all 0.3s
         &:after
           content ''
-          border-top 1px dashed #073
+          border-top 1px dashed $a-color
           position absolute
           bottom -0.35em
           left 0
