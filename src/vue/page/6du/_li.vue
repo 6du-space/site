@@ -57,10 +57,8 @@ main.pug(ref="m")
 
 <script lang=ls>
 import
-  \@/ls/html/md-load
-  \@/ls/html/md
   \@/ls/html/pug
-  \@/ls/db/Cache : {save, by-hash}
+  \@/ls/db/cache : {save, li-by-hash}
 
 #bufferInt64 = (buf) ~>
 #  ab = new ArrayBuffer buf.length+2
@@ -135,19 +133,12 @@ export default _ = pug(
           pre_month = m
           @li.push m
 
-      txt = await by-hash hash
-      if txt
-        txt = txt.v
-      else
-        txt  = await $f url
-        await save url, hash, txt
+      r = await li-by-hash hash
+      if not r
+        r = await save url, hash, await $f url
 
-      [h1, brief, meta] = await md-load txt
-      @li.push [
-        url
-        meta.链接标题 or h1
-        md brief
-      ]
+      r.push url
+      @li.push r
   (url)~>
     $get(
       url+\.js

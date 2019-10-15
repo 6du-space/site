@@ -1,7 +1,10 @@
 import
+  \@/ls/html/md-load
+  \@/ls/html/md
   \idb : {openDB}
 
 var DB
+
 open = ~>
   if not DB
     DB := await openDB(
@@ -11,44 +14,43 @@ open = ~>
           for i in <[
             hash
             url
+            li
           ]>
             db.createObjectStore(i, { keyPath: \k })
     )
   return DB
 
-_opened = (func) ~>
+opened = (func) ~>
   ~>
     await open!
     func.apply(DB, arguments)
 
-opened = (obj)~>
-  for k,v of obj
-    if typeof(v) == \function
-      obj[k] = _opened(v)
-    else
-      obj[k] = opened(v)
-  obj
+
+put = (dict)!~>
+  tx = DB.transaction(Object.keys(dict), \readwrite)
+  for k,v of dict
+    tx.objectStore(k).put {
+      k:v.shift!
+      v:if v.length == 1 then v[0] else v
+    }
+  return tx.done
+
 
 export
-  save : (url, hash, txt)->
-    tx = @transaction(
-      <[
-        url
-        hash
-      ]>
-      \readwrite
-    )
-    tx.objectStore(\url).put {
-      k:url
-      v:hash
+  save = (url, hash, txt)->
+    [h1, brief, meta] = md-load txt
+    h1 = meta.链接标题 or h1
+    brief = md brief
+    await put {
+      url : [url, hash]
+      hash : [hash, txt]
+      li : [hash, h1, brief]
     }
-    tx.objectStore(\hash).put {
-      k:hash
-      v:txt
-    }
-    await tx.done
+    return [ h1 , brief ]
 
-  by-url : (url)->
+  by-url = opened (url)->
 
-  by-hash : (hash)->
-      await @get(\hash, hash)
+  li-by-hash = opened (hash)->
+    r = (await @get(\li, hash))
+    if r
+      return r.v
