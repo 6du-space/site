@@ -11,28 +11,17 @@ main
         position relative
         color $a-color
         transition all 0.3s
-        &:after
-          content ''
-          border-top 1px dashed $a-color
-          position absolute
-          bottom -0.35em
-          left 0
-          transform scale(2, 0.5)
-          transform-origin 0 0
-          width 50%
-          transition all 0.3s
+        padding-bottom 0.2em
+        border-bottom 1px dashed $a-color
         &:hover
           color #f50
           font-weight bold
-          &:after
-            border-style solid
-            border-color #f50
+          border-bottom 2px solid #f50
         &.mdH
           color #ccc
           vertical-align 0.1em
           margin-right 0.31em
-          &:after
-            content none
+          border 0
           &:hover
             color #f50
       a.mdback, .mdref a
@@ -48,16 +37,14 @@ main
       ul.mdToc
         list-style none
         margin-left -0.96em
-        margin-bottom 1.8em
-        color #555
+        margin-bottom 1.2em
+        color #666
         a
-          color #555
-          &:after
-            border-top-color #555
+          color #666
+          border-color transparent
           &:hover
             color #f50
-            &:after
-              border-color #f50
+            border-color #f50
 </style>
 <template lang=pug>
 main(ref="m")
