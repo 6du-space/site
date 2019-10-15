@@ -36,22 +36,28 @@ put = (dict)!~>
   return tx.done
 
 
+save = (url, hash, txt)~>
+  [h1, brief, meta] = md-load txt
+  h1 = meta.链接标题 or h1
+  brief = md brief
+  li = [hash, h1, brief]
+  await put {
+    url : [url, hash]
+    hash : [hash, txt]
+    li
+  }
+  return li
+
 export
-  save = (url, hash, txt)->
-    [h1, brief, meta] = md-load txt
-    h1 = meta.链接标题 or h1
-    brief = md brief
-    li = [hash, h1, brief]
-    await put {
-      url : [url, hash]
-      hash : [hash, txt]
-      li
-    }
-    return li
 
   by-url = opened (url)->
 
-  li-by-hash = opened (hash)->
+  li-get = opened (url, hash)->
     r = (await @get(\li, hash))
     if r
-      return r.v
+      v = r.v
+    else
+      v = await save url, hash, await $f url
+    v.push url
+    return v
+

@@ -58,7 +58,7 @@ main.pug(ref="m")
 <script lang=ls>
 import
   \@/ls/html/pug
-  \@/ls/db/cache : {save, li-by-hash}
+  \@/ls/db/cache : {li-get}
 
 #bufferInt64 = (buf) ~>
 #  ab = new ArrayBuffer buf.length+2
@@ -125,6 +125,7 @@ export default _ = pug(
   (li, elem)!->
     $title elem(\h1).innerText
     pre_month = ''
+    todo = []
     for [time,hash,url],pos in _split li
 
       if time > 0
@@ -133,12 +134,11 @@ export default _ = pug(
           pre_month = m
           @li.push m
 
-      r = await li-by-hash hash
-      if not r
-        r = await save url, hash, await $f url
+      todo.push await li-get url, hash
+    @li.splice(
+      @li.length, todo.length, ... await Promise.all todo
+    )
 
-      r.push url
-      @li.push r
   (url)~>
     $get(
       url+\.js
