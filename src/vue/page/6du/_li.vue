@@ -122,7 +122,8 @@ export default _ = pug(
           pre_month = m
           @li.push m
 
-      txt =  await $f path
+      bin =  await $get path+"."+path.slice(0,path.indexOf("/")-1), \arrayBuffer
+      console.log txt
       [h1, brief, meta] = await md-load txt
 #      digest = await crypto.subtle.digest(\SHA-256, txt)
 #      console.log digest
