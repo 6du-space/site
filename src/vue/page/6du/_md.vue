@@ -26,6 +26,10 @@ main
           &:after
             border-style solid
             border-color #f50
+        &.mdH
+          color #ccc
+          &:after
+            content none
       a.mdback, .mdref a
         user-select none
         font-size 0.7em
@@ -34,6 +38,18 @@ main
           color #f50
         &:after
           content none
+      ul.mdToc
+        list-style none
+        margin-left -0.96em
+        color #555
+        a
+          color #555
+          &:after
+            border-top-color #555
+          &:hover
+            color #f50
+            &:after
+              border-color #f50
 </style>
 <template lang=pug>
 main(ref="m")

@@ -2,6 +2,7 @@ import
   \markdown-it : markdown
   \markdown-it-footnote-6du : footnote
   \markdown-it-block-image : blockImagePlugin
+  \markdown-it-toc-and-anchor : markdownItTocAndAnchor
 
 md = markdown({
   breaks : true
@@ -9,6 +10,12 @@ md = markdown({
   blockImagePlugin
   * outputContainer: 'p',
     containerClassName: "img"
+).use(
+  markdownItTocAndAnchor
+  * tocClassName : \mdToc
+    anchorClassName: \mdH
+    anchorLinkSymbol: \§
+    anchorLinkPrefix: \-
 )
 
 var _PATH

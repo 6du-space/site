@@ -2914,7 +2914,7 @@ clone-stats@^1.0.0:
   resolved "https://registry.npmjs.org/clone-stats/-/clone-stats-1.0.0.tgz#b3782dff8bb5474e18b9b6bf0fdfe782f8777680"
   integrity sha1-s3gt/4u1R04Yuba/D9/ngvh3doA=
 
-clone@2.x, clone@^2.1.1, clone@^2.1.2:
+clone@2.x, clone@^2.1.0, clone@^2.1.1, clone@^2.1.2:
   version "2.1.2"
   resolved "https://registry.npmjs.org/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
   integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
@@ -3247,10 +3247,15 @@ core-js@^2.4.0:
   resolved "https://registry.npmjs.org/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
   integrity sha512-HOpZf6eXmnl7la+cUdMnLvUxKNqLUzJvgIziQ0DiF3JwSImNphIqdGqzj6hIKyX04MmV0poclQ7+wjWvxQyR2A==
 
-core-js@^3.1.2, core-js@^3.2.1:
+core-js@^3.1.2:
   version "3.2.1"
   resolved "https://registry.npmjs.org/core-js/-/core-js-3.2.1.tgz#cd41f38534da6cc59f7db050fe67307de9868b09"
   integrity sha512-Qa5XSVefSVPRxy2XfUC13WbvqkxhkwB3ve+pgCQveNgYzbM/UxZeu1dcOX/xr4UmfUd+muuvsaxilQzCyUurMw==
+
+core-js@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.npm.taobao.org/core-js/download/core-js-3.3.2.tgz#cd42da1d7b0bb33ef11326be3a721934277ceb42"
+  integrity sha1-zULaHXsLsz7xEya+OnIZNCd860I=
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -7283,6 +7288,14 @@ markdown-it-footnote-6du@^3.0.2:
   resolved "https://registry.npmjs.org/markdown-it-footnote-6du/-/markdown-it-footnote-6du-3.0.2.tgz#a7e3562d13dd0a708641d1882763c3b34de06bbc"
   integrity sha512-npWsgQlhikLS2tvCgmCxiwHPTTnRLE55+0eAPBEzPxIjjcTCfTLxA9aAIBOVyiWZ6K0zJYIQ7/TRu3VVwDdg4w==
 
+markdown-it-toc-and-anchor@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.npm.taobao.org/markdown-it-toc-and-anchor/download/markdown-it-toc-and-anchor-4.2.0.tgz#d1613327cc63c61f82cd66cbac5564f4db12c0e9"
+  integrity sha1-0WEzJ8xjxh+CzWbLrFVk9NsSwOk=
+  dependencies:
+    clone "^2.1.0"
+    uslug "^1.0.4"
+
 markdown-it@^10.0.0:
   version "10.0.0"
   resolved "https://registry.npmjs.org/markdown-it/-/markdown-it-10.0.0.tgz#abfc64f141b1722d663402044e43927f1f50a8dc"
@@ -11011,6 +11024,11 @@ universalify@^0.1.0:
   resolved "https://registry.npmjs.org/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
 
+"unorm@>= 1.0.0":
+  version "1.6.0"
+  resolved "https://registry.npm.taobao.org/unorm/download/unorm-1.6.0.tgz#029b289661fba714f1a9af439eb51d9b16c205af"
+  integrity sha1-ApsolmH7pxTxqa9DnrUdmxbCBa8=
+
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
@@ -11080,6 +11098,13 @@ use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.npmjs.org/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
+
+uslug@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npm.taobao.org/uslug/download/uslug-1.0.4.tgz#b9a22f0914e0a86140633dacc302e5f4fa450677"
+  integrity sha1-uaIvCRTgqGFAYz2swwLl9PpFBnc=
+  dependencies:
+    unorm ">= 1.0.0"
 
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
@@ -11289,10 +11314,10 @@ vue-loader@^15.7.0:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
-vue-ohyeah-scroll@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.npmjs.org/vue-ohyeah-scroll/-/vue-ohyeah-scroll-0.4.0.tgz#a1ebaa6ccffeb75cbae31b5cfd80e5ee8a264193"
-  integrity sha512-fZr9z4WYrfJZ0ofI14yIrRg2YaiZlJeho/5B0z9OkPUVOFN5tqOv3j1kyzDFqqes3roFC4nl1AVCD6FhhhcrdQ==
+vue-ohyeah-scroll@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.npm.taobao.org/vue-ohyeah-scroll/download/vue-ohyeah-scroll-0.4.2.tgz#d5d9e7e728fe56bb26e6d9add25ef5cdf2b3dfbe"
+  integrity sha1-1dnn5yj+Vrsm5tmt0l71zfKz374=
   dependencies:
     element-resize-detector "^1.1.15"
     vue "^2.6.10"
