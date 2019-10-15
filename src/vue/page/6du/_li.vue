@@ -103,7 +103,6 @@ _split = (txt)~>
       new TextDecoder("utf-8").decode uint.slice(begin,pos)
     ]
     offset := pos+1
-  console.log li
   li
 
 export default _ = pug(

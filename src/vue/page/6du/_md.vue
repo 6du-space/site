@@ -46,6 +46,9 @@ import
   \@/ls/html/pug
   \@/ls/vue/route
 
+var esc
+keydown = \keydown
+
 export default _ = pug(
   \md
   * methods:
@@ -56,6 +59,24 @@ export default _ = pug(
         h1:''
         html:''
       }
+    destroyed:!~>
+      window.removeEventListener(
+        keydown
+        esc
+      )
+    mounted:!->
+      esc := (e)!~>
+        if <[
+          TEXTAREA
+          INPUT
+        ]>.indexOf(e.target.tagName)+1
+          return
+        if e.keyCode == 27
+          @x!
+      window.addEventListener(
+        keydown
+        esc
+      )
   (txt, elem)!->
     [h1, brief, meta, body] = await md-load txt
     $title h1

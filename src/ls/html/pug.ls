@@ -5,7 +5,11 @@ import
 export default _ = (url, option, callback, get)~>
   _get = get or (uri)~>
     $f uri
+  var com
   html {
+    destroyed:!~>
+      for i in com.$options.destroyed
+        i.call(com)
     beforeRoute:(to, from, next)!~>
       next !->
         ref = $(@$refs.m)
@@ -18,8 +22,9 @@ export default _ = (url, option, callback, get)~>
           'pug-'
           option
         )
+        com := new component().$mount(template)
         callback.call(
-          new component().$mount(template)
+          com
           await _get url+"/"+to.params.f
           elem
         )
