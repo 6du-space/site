@@ -30,7 +30,7 @@ if [ ! \( -e "./public/6.js" \) ]; then
     ln -s $D .
   done
   rm -rf 6.js
-  ln -s ../../../sh/6.js .
+  ln -s ../../sh/6.js .
   cd ..
 
   6du
