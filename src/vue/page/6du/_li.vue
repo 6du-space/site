@@ -114,19 +114,31 @@ export default _ = pug(
     pre_month = ''
     li = _split li
 
-    push = (l)~>
-      for [time,hash,url],pos in l
-
+    pos = 0
+    push = ~>
+      t = []
+      pos-next = pos + 5
+      li-t = li.slice(pos, pos-next)
+      for [time, hash, url] in li-t
+        t.push li-get url, hash
+      t = await Promise.all t
+      toadd = []
+      for [time,hash,url],n in li-t
         if time > 0
           m = new Date(time*1000).toISOString().slice(0,7)
           if m != pre_month
-            pre_month = m
-            @li.push m
-        @li.push await li-get url, hash
+            pre_month := m
+            toadd.push m
+        toadd.push t[n]
+      @li.splice @li.length, toadd.length, ...toadd
+      pos := pos-next
 
     # 预先加载6篇，防止页面抖动
-    await push(li.slice(0, 5))
-    push(li.slice(5))
+    await push!
+    do ~>
+      while pos < li.length
+        console.log pos
+        await push!
 
   (url)~>
     $get(
