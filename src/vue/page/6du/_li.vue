@@ -111,17 +111,22 @@ export default _ = pug(
         li:[]
       }
   (li)!->
-    do ~>
-      pre_month = ''
-      for [time,hash,url],pos in _split li
+    pre_month = ''
+    li = _split li
+
+    push = (l)~>
+      for [time,hash,url],pos in l
 
         if time > 0
           m = new Date(time*1000).toISOString().slice(0,7)
           if m != pre_month
             pre_month = m
             @li.push m
-
         @li.push await li-get url, hash
+
+    # 预先加载6篇，防止页面抖动
+    await push(li.slice(0, 5))
+    push(li.slice(5))
 
   (url)~>
     $get(
