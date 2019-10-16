@@ -40,7 +40,7 @@ save = (url, hash, txt)~>
   [h1, brief, meta] = md-load txt
   h1 = meta.链接标题 or h1
   brief = md brief
-  li = [hash, h1, brief]
+  li = [hash,meta.作者 or 0, h1, brief]
   await put {
     url : [url, hash]
     hash : [hash, txt]
@@ -59,6 +59,5 @@ export
     else
       #TODO 检测缓存，删除过期
       v = await save url, hash, await $f url
-    v.push url
     return v
 

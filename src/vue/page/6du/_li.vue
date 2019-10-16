@@ -136,10 +136,7 @@ export default _ = pug(
             toadd.push m
         else
             date = 0
-        o = t[n]
-        o.push date
-        console.log url, date
-        toadd.push o
+        toadd.push [url,date].concat t[n]
       @li.splice @li.length, toadd.length, ...toadd
       pos := pos-next
 
