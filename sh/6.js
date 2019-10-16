@@ -1,5 +1,4 @@
 (async ()=>{
-  await navigator.serviceWorker.register('/sw.js', {scope: '/'})
   var elem=(tag,attr)=>{
     var sc = document.createElement(tag);
       for(i in attr){
