@@ -86,6 +86,8 @@ _split = (txt)~>
       ++pos
     time = getBigInt48(txt, offset)
     hash = txt.slice(6+offset,begin)
+    if time > 0
+      time = time - TIMEZONE
     li.push [
       new TextDecoder("utf-8").decode uint.slice(begin,pos)
       hash
