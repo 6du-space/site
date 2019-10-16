@@ -89,7 +89,7 @@ _split = (txt)~>
     li.push [
       new TextDecoder("utf-8").decode uint.slice(begin,pos)
       hash
-      time+TIMEZONE
+      time
     ]
     offset := pos+1
   li
@@ -136,7 +136,7 @@ export default _ = pug(
             date = 0
         o = t[n]
         o.push date
-        console.log o
+        console.log url, date
         toadd.push o
       @li.splice @li.length, toadd.length, ...toadd
       pos := pos-next
