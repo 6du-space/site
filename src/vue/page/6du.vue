@@ -203,19 +203,6 @@ a.menu
        top .71rem
        width 62%
   */
-.vue>main>menu
-  transition all 1s
-  top 0
-  right 0
-  background linear-gradient(-90deg, #F8F8F8, #F8F8F8 50%, transparent)
-  position absolute
-  height 1.5rem
-  right 0
-  top -(@height + 0.1rem)
-  z-index 1
-  text-align right
-.vue>main.bar>menu
-  top 0
 .vue>main>a.menu
   border 1px solid #999
   top 2.02rem
@@ -244,37 +231,9 @@ a.menu
         &>main
           align-self center
           margin auto
-    &>a.menu, &>menu
+    &>a.menu
       position fixed
       z-index 9000
-    &>menu
-      display flex
-      justify-content flex-end
-      &:after
-        transform scale(0.5)
-        border-top 1px solid transparent
-        bottom 0
-        left -100%
-        transform-origin 100% 0
-        content ''
-        right 0
-        position absolute
-        border-image linear-gradient(-90deg, #CFCFCF, #CFCFCF 50%, transparent)
-        border-image-slice 10
-      .I
-        color #000
-        font-size 0.85rem
-        display inline-block
-        text-align center
-        height 1.5rem
-        width @height
-        line-height @height
-        &:hover
-          background #509dfc
-          color #fff
-        &.I-search
-          font-weight 600
-          right 0
     .main
       background #fff
       display flex
@@ -283,13 +242,6 @@ a.menu
       height 100%
       article
         max-width 41em
-.vue>main.bar
-  /deep/
-    .main
-      top 1.5rem
-      height calc(100% - 1.5rem)
-      &>.ohyeah-scroll-body
-        top -1.5rem
 @keyframes menuIn
   0%
     border-color #999
@@ -367,8 +319,6 @@ a.menu
     footer(v-html="foot")
   main(:class="{bar:bar}")
     a.menu(@click="x=0" ref="x")
-    menu(v-if="rbar.length" :style="'width:'+(1.5*(1+rbar.length))+'rem'")
-      a.I(v-for="i in rbar" :class="'I-'+i")
     ohyeah.main(
       :noHor="true" height="" width=""
       thumbColor="rgba(0,0,0,.2)"
@@ -448,7 +398,6 @@ export default _ =
         #git
         #search
       rbar:<[
-        search
       ]>
       x:0
       bar:1

@@ -147,6 +147,30 @@ export default _ = {
         age: 32,
         address: 'Sidney No. 1 Lake Park',
       }, {
+      }, {
+        key: '3',
+        name: 'Joe Black',
+        age: 32,
+        address: 'Sidney No. 1 Lake Park',
+      }, {
+      }, {
+        key: '3',
+        name: 'Joe Black',
+        age: 32,
+        address: 'Sidney No. 1 Lake Park',
+      }, {
+      }, {
+        key: '3',
+        name: 'Joe Black',
+        age: 32,
+        address: 'Sidney No. 1 Lake Park',
+      }, {
+      }, {
+        key: '3',
+        name: 'Joe Black',
+        age: 32,
+        address: 'Sidney No. 1 Lake Park',
+      }, {
         key: '4',
         name: 'Jim Red',
         age: 32,
