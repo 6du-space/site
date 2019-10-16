@@ -26,6 +26,13 @@ opened = (func) ~>
     func.apply(DB, arguments)
 
 
+rm = (dict)!~>
+  tx = DB.transaction(Object.keys(dict), \readwrite)
+  for k,v of dict
+    tx.objectStore(k).delete(\k , v)
+  return tx.done
+
+
 put = (dict)!~>
   tx = DB.transaction(Object.keys(dict), \readwrite)
   for k,v of dict
@@ -37,6 +44,14 @@ put = (dict)!~>
 
 
 save = (url, hash, txt)~>
+  old-hash = await DB.get \url, url
+  if old-hash
+    await rm {
+      li: old-hash
+      hash: old-hash
+    }
+    #TODO 检测缓存，删除过期
+
   [h1, brief, meta] = md-load txt
   h1 = meta.链接标题 or h1
   brief = md brief
@@ -57,7 +72,6 @@ export
     if r
       v = r.v
     else
-      #TODO 检测缓存，删除过期
       v = await save url, hash, await $f url
     return v
 
