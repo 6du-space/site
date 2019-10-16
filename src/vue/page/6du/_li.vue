@@ -144,7 +144,6 @@ export default _ = pug(
     await push!
     do ~>
       while pos < li.length
-        console.log pos
         await push!
 
   (url)~>
