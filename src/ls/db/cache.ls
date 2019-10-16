@@ -66,7 +66,16 @@ save = (url, hash, txt)~>
 export
 
   by-url = opened (url)->
-    $f url
+    hash = await @get \url, url
+    if hash
+      r = await @get \hash, hash.v
+      if r
+        return r.v
+    v = await $f url, \arrayBuffer
+    hash = await crypto.subtle.digest(\SHA-256, v)
+    txt = new TextDecoder(\utf-8).decode v
+    v = await save url, hash, txt
+    return txt
 
   li-get = opened (url, hash)->
     r = (await @get(\li, hash))
