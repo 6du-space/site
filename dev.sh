@@ -16,8 +16,6 @@ if [ ! \( -e "./public/6.js" \) ]; then
 
   cd $ROOT/public
   6du -y -d .
-  rm -rf 6du/6.js
-  ln -s ../../sh/6.js 6du
   rm -rf md li pug
 
   site=../../sh/site
@@ -27,12 +25,12 @@ if [ ! \( -e "./public/6.js" \) ]; then
   done
 
   cd 6du
-  for suffix in pug yaml; do
-    for D in ../$site/6du/*.$suffix; do
-      rm -rf `basename $D`
-      ln -s $D .
-    done
+  for D in ../$site/6du/*; do
+    rm -rf `basename $D`
+    ln -s $D .
   done
+  rm -rf 6.js
+  ln -s ../../../sh/6.js 6du
   cd ..
 
   6du
