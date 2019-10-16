@@ -10,10 +10,10 @@ route.add [
     \*
     \6du
     URL.concat [
-      #[
-      #  ":f(|)"
-      #  \index
-      #]
+      [
+        ":f(|)"
+        \index
+      ]
       [
         "*"
         \_404
