@@ -73,6 +73,8 @@ getBigInt48 = (txt, offset)~>
   time8.set(time,2)
   parseInt (new DataView(ab8)).getBigInt64()
 
+TIMEZONE = new Date().getTimezoneOffset()*60
+
 _split = (txt)~>
   li = []
   offset = 0
@@ -85,9 +87,9 @@ _split = (txt)~>
     time = getBigInt48(txt, offset)
     hash = txt.slice(6+offset,begin)
     li.push [
-      time
-      hash
       new TextDecoder("utf-8").decode uint.slice(begin,pos)
+      hash
+      time+TIMEZONE
     ]
     offset := pos+1
   li
@@ -119,17 +121,23 @@ export default _ = pug(
       t = []
       pos-next = pos + 5
       li-t = li.slice(pos, pos-next)
-      for [time, hash, url] in li-t
+      for [url,hash] in li-t
         t.push li-get url, hash
       t = await Promise.all t
       toadd = []
-      for [time,hash,url],n in li-t
+      for [url,hash,time],n in li-t
         if time > 0
-          m = new Date(time*1000).toISOString().slice(0,7)
+          date = new Date(time*1000).toISOString().slice(0,19).replace("T",' ')
+          m = date.slice(0,7)
           if m != pre_month
             pre_month := m
             toadd.push m
-        toadd.push t[n]
+        else
+            date = 0
+        o = t[n]
+        o.push date
+        console.log o
+        toadd.push o
       @li.splice @li.length, toadd.length, ...toadd
       pos := pos-next
 
