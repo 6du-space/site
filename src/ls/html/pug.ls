@@ -1,12 +1,12 @@
 import
   \@/ls/html
   \vue : Vue
+  \@/ls/db/cache : {by-url}
 
 style = \style
 
 export default _ = (url, option, callback, get)~>
-  _get = get or (uri)~>
-    $f uri
+  _get = get or by-url
   var com
   html {
     destroyed:!~>

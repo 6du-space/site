@@ -66,6 +66,7 @@ save = (url, hash, txt)~>
 export
 
   by-url = opened (url)->
+    $f url
 
   li-get = opened (url, hash)->
     r = (await @get(\li, hash))
