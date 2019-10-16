@@ -2,6 +2,8 @@ import
   \@/ls/html
   \vue : Vue
 
+style = \style
+
 export default _ = (url, option, callback, get)~>
   _get = get or (uri)~>
     $f uri
@@ -12,7 +14,9 @@ export default _ = (url, option, callback, get)~>
         i.call(com)
     beforeRoute:(to, from, next)!~>
       next !->
-        ref = $(@$refs.m)
+        {m} = @$refs
+        m[style] = "display:none"
+        ref = $(m)
         elem = (tag)~>
           ref.find(tag)._[0]
         template = elem \template
@@ -27,5 +31,7 @@ export default _ = (url, option, callback, get)~>
           await _get url+"/"+to.params.f
         )
         com.$mount(template)
-        $title elem(\h1).innerText
+        @$nextTick ~>
+          $title elem(\h1)?.innerText
+          m.removeAttribute style
   },\/ + url

@@ -60,18 +60,6 @@ import
   \@/ls/html/pug
   \@/ls/db/cache : {li-get}
 
-#bufferInt64 = (buf) ~>
-#  ab = new ArrayBuffer buf.length+2
-#  view = new Uint8Array ab
-#  i = 0
-#  view[0] = buf[0]
-#  view[1] = buf[0]
-#  i = 0
-#  while i < buf.length
-#    view[2+i] = buf[i]
-#    ++i
-#  view = new DataView(ab)
-#  return view.getBigInt64()
 
 getBigInt48 = (txt, offset)~>
   ab8 = new ArrayBuffer(8)
@@ -123,20 +111,17 @@ export default _ = pug(
         li:[]
       }
   (li)!->
-    pre_month = ''
-    todo = []
-    for [time,hash,url],pos in _split li
+    do ~>
+      pre_month = ''
+      for [time,hash,url],pos in _split li
 
-      if time > 0
-        m = new Date(time*1000).toISOString().slice(0,7)
-        if m != pre_month
-          pre_month = m
-          @li.push m
+        if time > 0
+          m = new Date(time*1000).toISOString().slice(0,7)
+          if m != pre_month
+            pre_month = m
+            @li.push m
 
-      todo.push li-get url, hash
-    @li.splice(
-      @li.length, todo.length, ... await Promise.all todo
-    )
+        @li.push await li-get url, hash
 
   (url)~>
     $get(
