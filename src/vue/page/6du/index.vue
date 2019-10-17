@@ -1,5 +1,5 @@
 <style lang=stylus scoped>
-.vue>main>.ohyeah-scroll-box>.ohyeah-scroll-body>main
+.vue>main>.ohyeah-scroll-box>.ohyeah-scroll-body>div>main
   width 100%
   font-size 1rem
   margin 0
@@ -33,11 +33,11 @@
 main
   menu
     label 城市
-    a(v-for="i,pos in city_li" :class="{now:pos==now.city}" @click="now.city=pos") {{i[1]}}
+    a(v-for="i,pos in city_li" :class="{now:pos==city_now}" @click="city_now=pos") {{i[1]}}
   menu
     label 指标
-    a(v-for="i,pos in indicator" :class="{now:pos==now.indicator}" @click="now.indicator=pos") {{i}}
-  template(v-if="now.indicator==0")
+    a(v-for="i,pos in indicator" :class="{now:pos==indicator_now}" @click="indicator_now=pos") {{i}}
+  template(v-if="indicator_now==0")
     menu
       label 品类
       a.now 全部
@@ -71,10 +71,8 @@ export default _ = {
       city_li:[
         [0, \全部]
       ]
-      now:{
-        city:0
-        indicator:: 0
-      }
+      city_now:0
+      indicator_now: 0
       indicator:<[
         毛利率
         价格指数
