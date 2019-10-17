@@ -1,1 +1,3 @@
-export default _ = require(\./_ajax.ls)('//api.cc.xvc.com')
+import
+  \./_ajax.ls
+export default _ = _ajax '//api.cc.xvc.com'

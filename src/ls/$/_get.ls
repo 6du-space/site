@@ -1,1 +1,3 @@
-export default _ = require(\./_ajax.ls) C.cdn.site
+import
+  \./_ajax.ls
+export default _ = _ajax C.cdn.site

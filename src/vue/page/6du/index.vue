@@ -63,6 +63,9 @@ import
 # Vue.use(DatePicker)
 
 export default _ = {
+  beforeMount:!->
+    city-li = await $api("city")
+    console.log city-li
   data:->
     {
       # locale: zhCN
