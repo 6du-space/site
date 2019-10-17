@@ -310,15 +310,15 @@ a.menu
 </style>
 <template lang=pug>
 .vue(:class="{x:x}")
-  ohyeah.aside(width="300px" :noHor="true" thumbColor="rgba(0,0,0,.2)" ref="side")
-    main()
-      header
-        h2.host {{host}}
-        x-ico.x(@click="x=1")
-      .pug(v-html="aside")
-    footer(v-html="foot")
+  //ohyeah.aside(width="300px" :noHor="true" thumbColor="rgba(0,0,0,.2)" ref="side")
+  //  main()
+  //    header
+  //      h2.host {{host}}
+  //      x-ico.x(@click="x=1")
+  //    .pug(v-html="aside")
+  //  footer(v-html="foot")
   main(:class="{bar:bar}")
-    a.menu(@click="x=0" ref="x")
+    // a.menu(@click="x=0" ref="x")
     ohyeah.main(
       :noHor="true" height="" width=""
       thumbColor="rgba(0,0,0,.2)"
@@ -399,7 +399,7 @@ export default _ =
         #search
       rbar:<[
       ]>
-      x:0
+      x:1
       bar:1
       aside:''
       foot:''
