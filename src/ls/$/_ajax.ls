@@ -3,8 +3,10 @@ import
   \@/ls/gadget/toast : toast
   \lodash : {escape}
 
-export default _ = (base)~>
-  (input, init, type="text")!~>
+
+
+ajax = (base)~>
+  _fetch = (input, init, type="text")!~>
     if typeof(init) == \string
       type = init
       init = {}
@@ -35,3 +37,8 @@ export default _ = (base)~>
         msg = """<span class=MR3>错误码</span>#{status}"""
     toast("""<a class=MR3 target="_blank" href="#{escape(input).replace(/"/g,'\\"')}">#{escape url}</a>加载失败，"""+msg).addClass('ERR')
 
+  _fetch.json = ~>
+    JSON.parse await _fetch.apply @,arguments
+  return _fetch
+
+export default _ = ajax

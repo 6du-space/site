@@ -62,7 +62,7 @@ import
 
 export default _ = {
   beforeMount:!->
-    city_li = await $api("city")
+    city_li = await $api.json(\city)
     @city_li.splice 1, city_li.length, ...city_li
     console.log @city_li
   data:->
