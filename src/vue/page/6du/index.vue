@@ -33,9 +33,7 @@
 main
   menu
     label 城市
-    a 全部
-    a 北京
-    a.now 上海
+    a(v-for="i,pos in city_li" :class="{now:pos==city_now}" @click="city_now=pos") {{i[1]}}
   menu
     label 指标
     a(v-for="i,pos in indicator" :class="{now:pos==indicator_now}" @click="indicator_now=pos") {{i}}
@@ -64,11 +62,16 @@ import
 
 export default _ = {
   beforeMount:!->
-    city-li = await $api("city")
-    console.log city-li
+    city_li = await $api("city")
+    @city_li.splice 1, city_li.length, ...city_li
+    console.log @city_li
   data:->
     {
       # locale: zhCN
+      city_li:[
+        [0, \全部]
+      ]
+      city_now:0
       indicator_now: 0
       indicator:<[
         毛利率
