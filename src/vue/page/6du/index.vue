@@ -14,6 +14,7 @@
       border-left 0
       border-right 0
   menu
+    user-select none
     border-bottom 1px solid #eee
     padding 1em
     .ant-select
