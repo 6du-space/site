@@ -34,16 +34,14 @@
 main
   menu
     label 城市
-    a(v-for="i,pos in city_li" :class="{now:pos==city_now}" @click="city_now=pos") {{i[1]}}
+    a(v-for="i,pos in city_li" :class="{now:pos==now.city}" @click="now.city=pos") {{i[1]}}
   menu
     label 指标
-    a(v-for="i,pos in indicator" :class="{now:pos==indicator_now}" @click="indicator_now=pos") {{i}}
-  template(v-if="indicator_now==0")
+    a(v-for="i,pos in indicator" :class="{now:pos==now.indicator}" @click="now.indicator=pos") {{i}}
+  template(v-if="now.indicator==0")
     menu
       label 品类
-      a.now 全部
-      a 生鲜
-      a 标品
+      a(v-for="i,pos in kind" :class="{now:pos==now.kind}" @click="now.kind=pos") {{i}}
 </template>
 
 <script lang=ls>
@@ -65,15 +63,37 @@ export default _ = {
   beforeMount:!->
     city_li = await $api.json(\city)
     @city_li.splice 1, city_li.length, ...city_li
-    console.log @city_li
+
+  computed:
+    url:->
+      {indicator, city, kind} = @now
+      if indicator
+        li = [city]
+      else
+        li = [city, kind]
+      ([<[city cpi]>[indicator]].concat li).join \-
+
+
+  watch:
+    url :(n)!->
+      @li = await $api.json @url
+
   data:->
     {
+      li:[]
       # locale: zhCN
       city_li:[
         [0, \全部]
       ]
-      city_now:0
-      indicator_now: 0
+      kind: <[
+        全部
+        生鲜
+        标品
+      ]>
+      now:
+        kind: 0
+        city: 0
+        indicator: 0
       indicator:<[
         毛利率
         价格指数
