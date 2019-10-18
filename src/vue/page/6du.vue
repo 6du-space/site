@@ -33,7 +33,7 @@ $aside-width = 300px
     bottom 0
     transform scale(0.5)
     transform-origin 0 0
-  &>.ohyeah-scroll-body>main>header
+  &>.ohyeah-scroll-body>div>main>header
     margin 2rem
     padding-bottom 2rem
     display flex
