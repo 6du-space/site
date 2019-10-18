@@ -10,6 +10,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@antv/data-set": "^0.10.2",
     "@antv/g2": "^3.5.9",
     "@antv/g2-plugin-slider": "^2.1.1",
     "babel-plugin-import": "^1.12.2",

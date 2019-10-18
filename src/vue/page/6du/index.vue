@@ -16,6 +16,7 @@
   menu
     user-select none
     border-bottom 1px solid #eee
+    line-height 2
     padding 1em
     .ant-select
       min-width 6.8em
@@ -42,6 +43,8 @@ main
     menu
       label 品类
       a(v-for="i,pos in kind" :class="{now:pos==now.kind}" @click="now.kind=pos") {{i}}
+  div(ref="slider")
+  .g2(ref="g2")
 </template>
 
 <script lang=ls>
@@ -49,7 +52,8 @@ main
 import
   \@/ls/vue/route
   \vue : Vue
-  \@antv/g2 : {G2}
+  \@antv/g2 : G2
+  \@antv/data-set : {DataSet}
   \@antv/g2-plugin-slider
 
 #  \ant-design-vue/lib/locale-provider/zh_CN : zhCN
@@ -81,12 +85,118 @@ export default _ = {
   beforeRoute:(to,from,next)!->
     o =  to.params
     o.indicator = Math.max(INDICATOR.indexOf(o.indicator),0)
-    li = await $api.json _url(o)
-    console.log li
+    li = []
+    for [day,sell,buy] in await $api.json _url(o)
+      profit = sell - buy
+      li.push {
+        sell:Math.round(sell/10000)/100
+        rate:Math.round(10000*profit/sell)/100
+        profit:Math.round(profit/10000)/100
+        time:day * 86400000
+      }
     next !->
-      @li = li
       for k of @now
         @now[k] = (o[k] - 0) or 0
+
+      if not li.length
+        return
+
+      end = li[*-1].time
+      begin-time = li[0].time
+      start = Math.max(begin-time,end - 92*86400000)
+      ds = new DataSet(
+        state: {
+          start
+          end
+        }
+      )
+      dv = ds.createView()
+      dv.source(li).transform({
+        type: \fold
+        key: 'type' # key字段
+        value: 'value' # value字段
+        retains:<[sell time rate profit]>
+      }).transform({
+        type: \filter
+        callback: ({time}) ~>
+          time >= ds.state.start && time <= ds.state.end
+      })
+      slideDv = ds.createView('origin');
+      slideDv.source(li).transform({
+        type: 'fold',
+        key: 'type',
+        value: 'value',
+        retains:<[time profit]>
+        fields: <[profit]>
+      })
+      {g2,slider} = @$refs
+      g2.innerHTML = slider.innerHTML = ''
+      padding = [40 66 30]
+      chart = new G2.Chart({
+        container: g2
+        forceFit: true
+        padding:padding
+        animate: false
+        height: window.innerHeight - g2.offsetTop - 90
+      })
+      chart.source(dv, {
+        time: {
+          type: 'time',
+          tickCount: 12,
+          mask: 'YYYY-MM-DD'
+        }
+      })
+
+      COLOR = {
+        sell : 'rgba(0,0,0,.1)'
+        profit : \#f50
+        rate : \#999
+      }
+
+      for [en,alias] in [
+        <[profit 毛利润]>
+        <[rate 毛利率]>
+        <[sell 销售额]>
+      ]
+        color = COLOR[en]
+        chart.scale(en,{alias})
+        chart.axis(en, {
+          label: {
+            textStyle: {
+              fill: color
+            }
+          }
+        })
+        chart.line().position("time*#en").color color
+
+      chart.render!
+      chart.interact(
+        \slider
+        {
+          container: slider
+          startRadio:  (start - begin-time)/ (end - begin-time)
+          xAxis: 'time'
+          height: 50
+          yAxis: \value
+          data: slideDv
+          backgroundChart: {
+            type: \line
+            color: COLOR.profit
+          }
+          backgroundStyle:{
+            lineWidth: 1
+            stroke: '#CCD6EC'
+            fill: '#CCD6EC'
+            fillOpacity: 0.1
+          }
+          onChange:(_ref)!~>
+            startValue = _ref.startValue
+            endValue = _ref.endValue
+            ds.setState('start', startValue)
+            ds.setState('end', endValue)
+          padding : padding
+        }
+      )
 
   computed:
     url:->
@@ -101,7 +211,6 @@ export default _ = {
 
   data:->
     {
-      li:[]
       # locale: zhCN
       city_li:[
         [0, \全部]
