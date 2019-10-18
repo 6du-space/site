@@ -64,6 +64,9 @@ export default _ = {
     city_li = await $api.json(\city)
     @city_li.splice 1, city_li.length, ...city_li
 
+#  beforeRoute:(to,from,next)!->
+#    console.log to
+#    next()
   computed:
     url:->
       {indicator, city, kind} = @now

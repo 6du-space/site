@@ -15,6 +15,14 @@ route.add [
         \index
       ]
       [
+        "cpi-:city"
+        \index
+      ]
+      [
+        "city-:city-:kind"
+        \index
+      ]
+      [
         "*"
         \_404
       ]
