@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@antv/g2": "^3.5.9",
+    "@antv/g2-plugin-slider": "^2.1.1",
     "babel-plugin-import": "^1.12.2",
     "core-js": "^3.3.2",
     "gsap": "^2.1.3",

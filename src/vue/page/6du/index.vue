@@ -49,6 +49,9 @@ main
 import
   \@/ls/vue/route
   \vue : Vue
+  \@antv/g2 : {G2}
+  \@antv/g2-plugin-slider
+
 #  \ant-design-vue/lib/locale-provider/zh_CN : zhCN
 #   \ant-design-vue : {message, Button, DatePicker, LocaleProvider, TreeSelect, Table}
 #   \ant-design-vue : {message, Button, DatePicker, LocaleProvider, TreeSelect, Table}
