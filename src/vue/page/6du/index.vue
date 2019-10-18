@@ -131,7 +131,7 @@ export default _ = {
       })
       {g2,slider} = @$refs
       g2.innerHTML = slider.innerHTML = ''
-      padding = [40 66 30]
+      padding = [40 90 30 66]
       chart = new G2.Chart({
         container: g2
         forceFit: true
@@ -153,22 +153,22 @@ export default _ = {
         rate : \#999
       }
 
-      for [en,alias] in [
+      for [en,alias], pos in [
         <[profit 毛利润]>
         <[rate 毛利率]>
         <[sell 销售额]>
       ]
         color = COLOR[en]
         chart.scale(en,{alias})
-        chart.axis(en, {
-          label: {
-            textStyle: {
-              fill: color
-            }
+        label ={
+          textStyle: {
+            fill: color
           }
-        })
+        }
+        if pos==2
+          label.offset = 40
+        chart.axis(en, {label})
         chart.line().position("time*#en").color color
-
       chart.render!
       chart.interact(
         \slider
