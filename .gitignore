@@ -2,7 +2,7 @@
 /dist/
 /font/
 /node_modules/
-/public
+/public/
 /src/config/
 /tests/e2e/screenshots/
 /tests/e2e/videos/
