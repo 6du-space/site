@@ -6,7 +6,7 @@ npx yarn run build
 ./sh/html2txt.ls
 
 cd dist/
-cp ../sh/package.json .
+cp ../src/config/package.json .
 npm version patch
 npm publish
 mv package.json ../sh/
