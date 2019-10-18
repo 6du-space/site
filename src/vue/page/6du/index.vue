@@ -77,6 +77,136 @@ _url = ({indicator, city, kind})~>
     li = [city, kind or 0]
   url = ([INDICATOR[indicator]].concat li).join \-
 
+_render = (li, line-li, offset)->
+  end = li[*-1].time
+  begin-time = li[0].time
+  start = Math.max(begin-time,end - offset*86400000)
+  ds = new DataSet(
+    state: {
+      start
+      end
+    }
+  )
+  dv = ds.createView()
+  dv.source(li).transform({
+    type: \fold
+    key: 'type' # key字段
+    value: 'value' # value字段
+    retains:<[sell time rate profit]>
+  }).transform({
+    type: \filter
+    callback: ({time}) ~>
+      time >= ds.state.start && time <= ds.state.end
+  })
+  slideDv = ds.createView()
+  field = line-li[0][0]
+  slideDv.source(li).transform({
+    type: 'fold',
+    key: 'type',
+    value: 'value',
+    retains:[\time field]
+    fields: [field]
+  })
+  {g2,slider} = @$refs
+  padding = [40 90 30 66]
+  chart = new G2.Chart({
+    container: g2
+    forceFit: true
+    padding:padding
+    animate: false
+    height: window.innerHeight - g2.offsetTop - 90
+  })
+  chart.source(dv, {
+    time: {
+      type: 'time',
+      tickCount: 12,
+      mask: 'YYYY-MM-DD'
+    }
+  })
+
+
+  for [en,alias,color],pos in line-li
+    chart.scale(en,{alias})
+    label ={
+      textStyle: {
+        fill: color
+      }
+    }
+    if pos==2
+      label.offset = 40
+    chart.axis(en, {label})
+    chart.line().position("time*#en").color color
+  chart.render!
+  chart.interact(
+    \slider
+    {
+      container: slider
+      startRadio:  (start - begin-time)/ (end - begin-time)
+      xAxis: 'time'
+      height: 50
+      yAxis: \value
+      data: slideDv
+      backgroundChart: {
+        type: \line
+        color: line-li[0][2]
+      }
+      backgroundStyle:{
+        lineWidth: 1
+        stroke: '#CCD6EC'
+        fill: '#CCD6EC'
+        fillOpacity: 0.1
+      }
+      onChange:(_ref)!~>
+        startValue = _ref.startValue
+        endValue = _ref.endValue
+        ds.setState('start', startValue)
+        ds.setState('end', endValue)
+      padding : padding
+    }
+  )
+
+render = [
+(data)->
+  li = []
+  for [day,sell,buy] in data
+    profit = sell - buy
+    li.push {
+      sell:Math.round(sell/10000)/100
+      rate:Math.round(10000*profit/sell)/100
+      profit:Math.round(profit/10000)/100
+      time:day * 86400000
+    }
+  _render.call(
+    @
+    li
+    [
+      <[profit 毛利润 #f50]>
+      <[rate 毛利率 #aaa]>
+      <[sell 销售额 rgba(0,0,0,.1)]>
+    ]
+    183
+  )
+(data)->
+  li = []
+  base = data[0][1]
+  for [day,sell,buy] in data
+    profit = sell - buy
+    li.push {
+      sell:Math.round(100*sell/base)/100
+      rate:Math.round(10000*profit/sell)/100
+      time:day * 86400000
+    }
+  _render.call(
+    @
+    li
+    [
+      <[sell 销售价格指数 #369]>
+      <[rate 价格指数毛利率 #ddd]>
+    ]
+    999
+  )
+]
+
 export default _ = {
   beforeMount:!->
     city_li = await $api.json(\city)
@@ -85,118 +215,19 @@ export default _ = {
   beforeRoute:(to,from,next)!->
     o =  to.params
     o.indicator = Math.max(INDICATOR.indexOf(o.indicator),0)
-    li = []
-    for [day,sell,buy] in await $api.json _url(o)
-      profit = sell - buy
-      li.push {
-        sell:Math.round(sell/10000)/100
-        rate:Math.round(10000*profit/sell)/100
-        profit:Math.round(profit/10000)/100
-        time:day * 86400000
-      }
+    data = await $api.json _url(o)
     next !->
       for k of @now
         @now[k] = (o[k] - 0) or 0
 
-      if not li.length
+      for i in <[g2 slider]>
+        @$refs[i].innerHTML = ''
+
+      if not data.length
         return
 
-      end = li[*-1].time
-      begin-time = li[0].time
-      start = Math.max(begin-time,end - 92*86400000)
-      ds = new DataSet(
-        state: {
-          start
-          end
-        }
-      )
-      dv = ds.createView()
-      dv.source(li).transform({
-        type: \fold
-        key: 'type' # key字段
-        value: 'value' # value字段
-        retains:<[sell time rate profit]>
-      }).transform({
-        type: \filter
-        callback: ({time}) ~>
-          time >= ds.state.start && time <= ds.state.end
-      })
-      slideDv = ds.createView('origin');
-      slideDv.source(li).transform({
-        type: 'fold',
-        key: 'type',
-        value: 'value',
-        retains:<[time profit]>
-        fields: <[profit]>
-      })
-      {g2,slider} = @$refs
-      g2.innerHTML = slider.innerHTML = ''
-      padding = [40 90 30 66]
-      chart = new G2.Chart({
-        container: g2
-        forceFit: true
-        padding:padding
-        animate: false
-        height: window.innerHeight - g2.offsetTop - 90
-      })
-      chart.source(dv, {
-        time: {
-          type: 'time',
-          tickCount: 12,
-          mask: 'YYYY-MM-DD'
-        }
-      })
+      render[o.indicator].call @,data
 
-      COLOR = {
-        sell : 'rgba(0,0,0,.1)'
-        profit : \#f50
-        rate : \#999
-      }
-
-      for [en,alias], pos in [
-        <[profit 毛利润]>
-        <[rate 毛利率]>
-        <[sell 销售额]>
-      ]
-        color = COLOR[en]
-        chart.scale(en,{alias})
-        label ={
-          textStyle: {
-            fill: color
-          }
-        }
-        if pos==2
-          label.offset = 40
-        chart.axis(en, {label})
-        chart.line().position("time*#en").color color
-      chart.render!
-      chart.interact(
-        \slider
-        {
-          container: slider
-          startRadio:  (start - begin-time)/ (end - begin-time)
-          xAxis: 'time'
-          height: 50
-          yAxis: \value
-          data: slideDv
-          backgroundChart: {
-            type: \line
-            color: COLOR.profit
-          }
-          backgroundStyle:{
-            lineWidth: 1
-            stroke: '#CCD6EC'
-            fill: '#CCD6EC'
-            fillOpacity: 0.1
-          }
-          onChange:(_ref)!~>
-            startValue = _ref.startValue
-            endValue = _ref.endValue
-            ds.setState('start', startValue)
-            ds.setState('end', endValue)
-          padding : padding
-        }
-      )
 
   computed:
     url:->
