@@ -63,10 +63,11 @@ import
 INDICATOR = <[city cpi]>
 
 _url = ({indicator, city, kind})~>
+  city = city or 0
   if indicator
     li = [city]
   else
-    li = [city, kind]
+    li = [city, kind or 0]
   url = ([INDICATOR[indicator]].concat li).join \-
 
 export default _ = {
@@ -87,7 +88,6 @@ export default _ = {
   computed:
     url:->
       _url @now
-
 
   watch:
     url :(url)!->
