@@ -1,12 +1,12 @@
 .DS_Store
-ossutil_output/
+/dist/
 /font/
 /node_modules/
-/dist/
 /public
 /src/config/
-/tests/e2e/videos/
 /tests/e2e/screenshots/
+/tests/e2e/videos/
+ossutil_output/
 
 # local env files
 .env.local
