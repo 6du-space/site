@@ -1,4 +1,4 @@
-#!/usr/bin/env npx lsc
+#!/usr/bin/env -S node -r ./livescript-transform-implicit-async/register
 
 require! <[
   path
