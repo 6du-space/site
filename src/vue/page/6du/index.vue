@@ -47,6 +47,7 @@ main
 <script lang=ls>
 
 import
+  \@/ls/vue/route
   \vue : Vue
 #  \ant-design-vue/lib/locale-provider/zh_CN : zhCN
 #   \ant-design-vue : {message, Button, DatePicker, LocaleProvider, TreeSelect, Table}
@@ -59,27 +60,41 @@ import
 # Vue.use(Button)
 # Vue.use(DatePicker)
 
+INDICATOR = <[city cpi]>
+
+_url = ({indicator, city, kind})~>
+  if indicator
+    li = [city]
+  else
+    li = [city, kind]
+  url = ([INDICATOR[indicator]].concat li).join \-
+
 export default _ = {
   beforeMount:!->
     city_li = await $api.json(\city)
     @city_li.splice 1, city_li.length, ...city_li
 
-#  beforeRoute:(to,from,next)!->
-#    console.log to
-#    next()
+  beforeRoute:(to,from,next)!->
+    o =  to.params
+    o.indicator = Math.max(INDICATOR.indexOf(o.indicator),0)
+    li = await $api.json _url(o)
+    console.log li
+    next !->
+      @li = li
+      for k of @now
+        @now[k] = (o[k] - 0) or 0
+
   computed:
     url:->
-      {indicator, city, kind} = @now
-      if indicator
-        li = [city]
-      else
-        li = [city, kind]
-      ([<[city cpi]>[indicator]].concat li).join \-
+      _url @now
 
 
   watch:
-    url :(n)!->
-      @li = await $api.json @url
+    url :(url)!->
+      if url == \city-0-0
+        url = \/
+      if location.pathname != \/ + url
+        route.push url
 
   data:->
     {

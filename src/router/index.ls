@@ -15,11 +15,7 @@ route.add [
         \index
       ]
       [
-        "cpi-:city"
-        \index
-      ]
-      [
-        "city-:city-:kind"
+        ":indicator(city|cpi)-:city(\\d+)(-?):kind(\\d+)?"
         \index
       ]
       [
