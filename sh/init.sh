@@ -12,9 +12,9 @@ if [ ! \( -d "./font" \) ]; then
   git clone git@gitee.com:www-6du-space/font.git --depth=1
 fi
 
-if [ ! \( -e "./src/config" \) ]; then
+if [ ! \( -d "./src/config" \) ]; then
   print "use default config"
-  cp -r ./config.6du.host ./src/config
+  git clone git@github.com:6du-site/config.git src/config --depth=1
 fi
 
 
