@@ -9,9 +9,9 @@ cd dist/
 cp ../src/config/package.json .
 npm version patch
 npm publish
-mv package.json ../sh/
+mv package.json ../src/config
 
 git add -u
 git commit -m "dist"
 cd $ROOT
-ossutil cp dist/  oss://6d2 --recursive --update
+ossutil cp dist/ oss://`cat src/config/oss.bucket.txt` --recursive --update
