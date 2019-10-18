@@ -4,7 +4,7 @@ ossutil_output/
 /node_modules/
 /dist/
 /public
-/config/
+/src/config/
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 
