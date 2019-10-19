@@ -285,9 +285,8 @@ a.menu
         max-width 41em
 .vue>main.bar
   /deep/
-    .main
+    &>.main
       top 1.5rem
-      height calc(100% - 1.5rem)
       &>.ohyeah-scroll-body
         top -1.5rem
 @keyframes menuIn

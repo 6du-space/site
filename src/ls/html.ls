@@ -49,16 +49,24 @@ export default _ = (mod, dir)->
 
     insert = !->
       setHTMLWithScript @$refs.m, body
+    scroll = !->
+      console.log to
+      console.log decodeURIComponent(to.hash)
+      console.log document.getElementById(decodeURIComponent(to.hash).slice(1))
+
     if beforeRoute
       beforeRoute(
         to
         from
         (func)!~>
           next !->
-            insert.apply @, arguments
-            func.apply @, arguments
+            insert.call @
+            func.call @
+            scroll.call @
       )
     else
-      next insert
+      next !->
+        insert.call @
+        scroll.call @
   return mod
 
