@@ -11,8 +11,6 @@ menu
   top -(@height + 0.1rem)
   z-index 1
   text-align right
-menu
-  top 0
 </style>
 
 <template lang=pug>

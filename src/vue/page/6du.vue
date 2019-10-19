@@ -5,7 +5,7 @@ body
 <style lang=stylus scoped>
 @import url('//at.alicdn.com/t/font_1322410_38fadlk7pa2.css')
 $width = 1.5rem
-a.menu
+a.open
   width $width
   display inline-block
   position relative
@@ -35,48 +35,9 @@ a.menu
         transform scale(0.65) rotate(45deg)
       &:before
         transform scale(0.65) rotate(135deg)
-  /*
-   width 1.2rem
-   top: 2rem;
-   &:before
-     top .667rem
-   &:after
-     bottom .667rem
-   &:before,&:after
-     transition width .5s
-     background #000
-     content ""
-     position absolute
-     height 2px
-     width 100%
-     transition: all .5s
-   &:after
-     width 62%
-   &:hover
-     &:before,&:after
-       height 1px
-       background #f50
-     &:after
-       width 100%
-       bottom .71rem
-     &:before
-       top .71rem
-       width 62%
-  */
-.vue>main>menu
-  transition all 1s
-  top 0
-  right 0
-  background linear-gradient(-90deg, #F8F8F8, #F8F8F8 50%, transparent)
-  position absolute
-  height 1.5rem
-  right 0
-  top -(@height + 0.1rem)
-  z-index 1
-  text-align right
 .vue>main.bar>menu
   top 0
-.vue>main>a.menu
+.vue>main>a.open
   border 1px solid #999
   top 2.02rem
   width 1.5rem
@@ -104,7 +65,7 @@ a.menu
         &>main
           align-self center
           margin auto
-    &>a.menu, &>menu
+    &>a.open, &>menu
       position fixed
       z-index 9000
     &>menu
@@ -198,9 +159,9 @@ a.menu
     /deep/
       &>main
         left 0
-        &>a.menu
+        &>a.open
           left -1rem
-        &.bar>a.menu
+        &.bar>a.open
           left 0
           animation none
           &:hover
@@ -208,7 +169,7 @@ a.menu
             background #f50
             border-radius 0 3rem 3rem 0
             animation 0.5s menuBreathe1, 1s menuBreathe2 0.5s infinite
-        &>a.menu
+        &>a.open
           &.in
             animation 2s menuIn
       &>.aside
@@ -217,11 +178,10 @@ a.menu
 </style>
 <template lang=pug>
 .vue(:class="{x:x}")
-  x-aside(ref="side" :x.sync="x")
+  v-aside(ref="side" :x.sync="x")
   main(:class="{bar:bar}")
-    a.menu(@click="x=false" ref="x")
-    menu(v-if="rbar.length" :style="'width:'+(1.5*(.5+rbar.length))+'rem'")
-      a.I(v-for="i in rbar" :class="'I-'+i")
+    a.open(@click="x=false" ref="x")
+    v-menu
     ohyeah.main(
       :noHor="true" height="" width=""
       thumbColor="rgba(0,0,0,.2)"
@@ -234,11 +194,13 @@ a.menu
 import
   \vue : Vue
   \@/vue/page/6du/_util/aside
+  \@/vue/page/6du/_util/menu
 
 preTop = 0
 var timeout
 
-Vue.component(\x-aside,aside)
+Vue.component(\v-aside,aside)
+Vue.component(\v-menu,menu)
 
 export default _ =
   beforeRouteEnter : (to, from, next)!~>
@@ -298,12 +260,6 @@ export default _ =
           @bar = 1
   data:->
     {
-        #msg
-        #git
-        #search
-      rbar:<[
-        search
-      ]>
       x:false
       bar:1
     }
