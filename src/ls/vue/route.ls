@@ -75,9 +75,12 @@ R.beforeEach (to, from, next)!~>
   if BACK
     BACK := false
   else
-    HISTORY.push to.path
-    if HISTORY.length > 99
-      HISTORY.shift!
+    {path} = to
+    len = HISTORY.length
+    if HISTORY[len-1] != path
+      HISTORY.push path
+      if len > 99
+        HISTORY.shift!
   next()
 
 R.back = ~>
