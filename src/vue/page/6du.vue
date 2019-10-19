@@ -61,13 +61,11 @@ a.open
       &>.ohyeah-scroll-vertical-track-h:hover
         background rgba(0, 0, 0, 0.05) !important
       &>.ohyeah-scroll-body
-        flex-direction column
         &>div
+          min-height 100%
+          height auto
           display flex
-          &>main
-            min-height 100%
-            align-self center
-            margin auto
+          margin auto
     &>a.open, &>menu
       position fixed
       z-index 9000
