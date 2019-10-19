@@ -35,6 +35,34 @@ a.menu
         transform scale(0.65) rotate(45deg)
       &:before
         transform scale(0.65) rotate(135deg)
+  /*
+   width 1.2rem
+   top: 2rem;
+   &:before
+     top .667rem
+   &:after
+     bottom .667rem
+   &:before,&:after
+     transition width .5s
+     background #000
+     content ""
+     position absolute
+     height 2px
+     width 100%
+     transition: all .5s
+   &:after
+     width 62%
+   &:hover
+     &:before,&:after
+       height 1px
+       background #f50
+     &:after
+       width 100%
+       bottom .71rem
+     &:before
+       top .71rem
+       width 62%
+  */
 .vue>main>menu
   transition all 1s
   top 0
@@ -248,7 +276,6 @@ export default _ =
       else
         clearTimeout timeout
         x.removeClass cls
-
   methods:
     scroll:!->
       offset = 64
