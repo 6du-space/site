@@ -50,9 +50,9 @@ export default _ = (mod, dir)->
     insert = !->
       setHTMLWithScript @$refs.m, body
     scroll = !->
-      console.log to
-      console.log decodeURIComponent(to.hash)
-      console.log document.getElementById(decodeURIComponent(to.hash).slice(1))
+      history.replaceState(null, null, ' ');
+      @$nextTick !~>
+        location.hash = to.hash
 
     if beforeRoute
       beforeRoute(
@@ -61,7 +61,7 @@ export default _ = (mod, dir)->
         (func)!~>
           next !->
             insert.call @
-            func.call @
+            await func.call @
             scroll.call @
       )
     else
