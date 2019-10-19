@@ -2,7 +2,7 @@
 $l-purple = #fff
 $color = #fc0
 $eye = #333
-.W
+main
   user-select none
   margin auto
   display flex
@@ -190,7 +190,7 @@ p, .box__ghost-container
     opacity 0.3
 </style>
 <template lang=pug>
-.W
+main
   h1 {{state}}
   .box
     .box__ghost

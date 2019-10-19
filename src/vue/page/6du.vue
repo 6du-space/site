@@ -62,9 +62,12 @@ a.open
         background rgba(0, 0, 0, 0.05) !important
       &>.ohyeah-scroll-body
         flex-direction column
-        &>main
-          align-self center
-          margin auto
+        &>div
+          display flex
+          &>main
+            min-height 100%
+            align-self center
+            margin auto
     &>a.open, &>menu
       position fixed
       z-index 9000
