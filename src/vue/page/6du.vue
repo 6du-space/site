@@ -366,7 +366,7 @@ a.menu
     footer(v-html="foot")
   main(:class="{bar:bar}")
     a.menu(@click="x=0" ref="x")
-    menu(v-if="rbar.length" :style="'width:'+(1.5*(1+rbar.length))+'rem'")
+    menu(v-if="rbar.length" :style="'width:'+(1.5*(.5+rbar.length))+'rem'")
       a.I(v-for="i in rbar" :class="'I-'+i")
     ohyeah.main(
       :noHor="true" height="" width=""
