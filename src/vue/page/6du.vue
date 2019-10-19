@@ -374,8 +374,6 @@ a.menu
       @onVerStart="scroll" @onScroll="scroll" ref="main"
     )
       router-view
-
-
 </template>
 
 <script lang=ls>
