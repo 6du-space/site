@@ -11,6 +11,12 @@ main.pug /deep/
       padding-top 0.2rem
       text-shadow 1px 1px 0 #aaa
       margin 0
+      justify-content space-between
+      b.date
+        width 3.4em
+        padding-right 0.4em
+        justify-content space-between
+        display flex
     &>h2.date:first-child
       padding-top 0.2rem
       margin-top 0
