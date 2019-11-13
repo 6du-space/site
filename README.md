@@ -1,4 +1,4 @@
-[# 6du.host](https://github.com/6du-space/site)
+# [6du.host](https://github.com/6du-space/site)
 
 ## Project setup
 ```
